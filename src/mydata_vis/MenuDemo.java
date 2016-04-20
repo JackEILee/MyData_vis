@@ -132,7 +132,7 @@ import org.gephi.layout.api.LayoutController;
 import static org.gephi.preview.types.EdgeColor.Mode.ORIGINAL;
  class new_demo {
      
-     JPanel script(String fileName,String layoutMethod,String graphIsDirect,
+     JPanel script(String fileName,String EcolorfileName,String layoutMethod,String graphIsDirect,
                                             int egoNodeID,Double repulseStrength,Double gravity,Double speed,
                                             Float area,Float optimalDistance,Float stepRatio )    //增加两个参数,是否为有向图
     {
@@ -347,7 +347,7 @@ if(!graphIsDirect.equals("Direct")&&(!graphIsDirect.equals("unDirect")))   //进
           //Color[] colory={RED,YELLOW,BLUE,GREEN,PINK,GRAY,BLACK};
         Graph graph2=Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph();
           //Color[] colory={RED,YELLOW,BLUE,GREEN,PINK,GRAY,BLACK};
-          ArrayList bo=MyColor.ColorRead();
+          ArrayList bo=MyColor.ColorRead( EcolorfileName);
           
            EdgeIterable  edges=graph2.getEdges();
              Iterator<Edge> cco=edges.iterator();
@@ -419,11 +419,14 @@ public class MenuDemo extends Frame
         
         private String layoutMethod=new String("ForceAtlasLayout");   //默认随机布局方式，效果混乱
         
-	private MenuBar menubar;                                   //菜单栏，后续进行补充和完善
-	private Menu menu;
-	private MenuItem menuitem;
-	private FileDialog filedialog;
-	private String filedir;                                    //文件对话框和文件路径
+        private MenuBar menubar;                                   //菜单栏，后续进行补充和完善
+    	private Menu menu;
+    	private MenuItem menuitem;
+            private MenuItem menuitem2;
+    	private FileDialog filedialog;
+            private FileDialog filedialog2;
+    	private String filedir;                                    //文件对话框和文件路径
+            private String filedir2;                                     //文件对话框和文件路径
         
         JPanel statistic=new JPanel();                            //数据统计和布局算法执行的面板
         JPanel excute=new JPanel();
@@ -518,7 +521,7 @@ public	MenuDemo()
                             gravity = (double)slider2.getValue();
                             repulseStrength = (double)slider1.getValue();
                             layoutMethod=new String("ForceAtlasLayout");                       
-                            temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                            temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                             workTabbedPane.add("ForceAtlasLayout",temp);
                             workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("ForceAtlasLayout").getJPanel());
                             
@@ -537,7 +540,7 @@ public	MenuDemo()
                             gravity = (double)slider2.getValue();
                             repulseStrength = (double)slider1.getValue();
                             layoutMethod=new String("ForceAtlasLayout");                       
-                            temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                            temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                             workTabbedPane.add("ForceAtlasLayout",temp);
                             workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("ForceAtlasLayout").getJPanel());
                      }
@@ -555,7 +558,7 @@ public	MenuDemo()
                             optimalDistance=(float)slider4.getValue();
                             stepRatio=(float)slider5.getValue();
                             layoutMethod=new String("YifanHuLayout");
-                            temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                            temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                             workTabbedPane.add("YifanHuLayout",temp);
                             workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("YifanHuLayout").getJPanel());
                      }
@@ -573,7 +576,7 @@ public	MenuDemo()
                             optimalDistance=(float)slider4.getValue();
                             stepRatio=(float)slider5.getValue();
                             layoutMethod=new String("YifanHuLayout");
-                            temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                            temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                             workTabbedPane.add("YifanHuLayout",temp);
                              workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("YifanHuLayout").getJPanel());
                      }
@@ -592,7 +595,7 @@ public	MenuDemo()
                              speed=(double)slider8.getValue();
                              area=(float)slider9.getValue();
                              layoutMethod=new String("FruchtermanReingold");                       
-                             temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                             temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                              workTabbedPane.add("FruchtermanReingold",temp);
                              workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("YifanHuLayout").getJPanel());
                      }
@@ -611,7 +614,7 @@ public	MenuDemo()
                              speed=(double)slider8.getValue();
                              area=(float)slider9.getValue();
                              layoutMethod=new String("FruchtermanReingold");                       
-                             temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                             temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                              workTabbedPane.add("FruchtermanReingold",temp);
                              workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("FruchtermanReingold").getJPanel());
                      }
@@ -630,7 +633,7 @@ public	MenuDemo()
                              speed=(double)slider8.getValue();
                              area=(float)slider9.getValue();
                              layoutMethod=new String("FruchtermanReingold");                       
-                             temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                             temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                              workTabbedPane.add("FruchtermanReingold",temp);
                              workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("FR").getJPanel());
                      }
@@ -647,7 +650,9 @@ public	MenuDemo()
 		menubar = new MenuBar();
 		menu = new Menu("File");
 		menuitem = new MenuItem("fileload");
+                menuitem2 = new MenuItem("fileload2");
 		filedialog = new FileDialog(frame,"fileload",FileDialog.LOAD);
+                filedialog2 = new FileDialog(frame,"fileload2",FileDialog.LOAD);
 		frame.setMenuBar(menubar);
                 menu.add(menuitem);
 		menubar.add(menu);
@@ -680,7 +685,7 @@ public	MenuDemo()
                      {    
                          public void actionPerformed(ActionEvent e)
                          {                  
-                             statisticPanel=new new_demo().script(filedir,layoutMethod,"unDirect",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图                                                      
+                             statisticPanel=new new_demo().script(filedir,filedir2,layoutMethod,"unDirect",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图                                                      
                              statistic.add("unDirect",statisticPanel);          //将统计信息面板返回
                              
                          }
@@ -690,7 +695,7 @@ public	MenuDemo()
                      {    
                         public void actionPerformed(ActionEvent e)
                          {                  
-                             statisticPanel=new new_demo().script(filedir,layoutMethod,"Direct",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图                           
+                             statisticPanel=new new_demo().script(filedir,filedir2,layoutMethod,"Direct",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图                           
                              statistic.add("Direct",statisticPanel);          //将统计信息面板返回
                             
                          }
@@ -737,7 +742,7 @@ public	MenuDemo()
                          public void actionPerformed(ActionEvent e)
                          {
                              layoutMethod=new String("ForceAtlasLayout");                       
-                             temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                             temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                              workTabbedPane.add("ForceAtlasLayout",temp);
                               workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("ForceAtlas2").getJPanel());
                          }
@@ -748,7 +753,7 @@ public	MenuDemo()
                          public void actionPerformed(ActionEvent e)
                          {
                              layoutMethod=new String("YifanHuLayout");
-                             temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                             temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                              workTabbedPane.add("YifanHuLayout",temp);
                                workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("Yifanhu").getJPanel());
                          }
@@ -761,7 +766,7 @@ public	MenuDemo()
                          public void actionPerformed(ActionEvent e)
                          {
                              layoutMethod=new String("FruchtermanReingold");
-                             temp=new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
+                             temp=new new_demo().script(filedir,filedir2,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图
                               workTabbedPane.add("FruchtermanReingold",temp);
                                workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("FR").getJPanel());
                          }
@@ -774,7 +779,7 @@ public	MenuDemo()
                              
                             String s=JOptionPane.showInputDialog("Enter the ID of the ego point.");                                                 
                             JOptionPane.showMessageDialog(null,"You want to watch"+s ,"number",JOptionPane.INFORMATION_MESSAGE);
-                             temp=new new_demo().script(filedir,layoutMethod,"unDirect", Integer.parseInt(s),repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图                                                      
+                             temp=new new_demo().script(filedir,filedir2,layoutMethod,"unDirect", Integer.parseInt(s),repulseStrength,gravity,speed,area,optimalDistance,stepRatio);  //调用布局算法返回生成的布局图                                                      
                              workTabbedPane.add("EGO",temp);        //将统计信息面板返回                             
                          }
                      });
@@ -816,10 +821,12 @@ public	MenuDemo()
 			public void actionPerformed(ActionEvent e)
 			{
 				filedialog.setVisible(true);
-				filedir = filedialog.getDirectory()+filedialog.getFile();
-				System.out.println(filedir);
-                                
-                                JPanel temp= new new_demo().script(filedir,layoutMethod,"unKnown",-1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);                                                                                  
+                filedialog2.setVisible(true);
+filedir = filedialog.getDirectory()+filedialog.getFile();
+                filedir2 = filedialog2.getDirectory()+filedialog2.getFile();
+System.out.println(filedir);
+                System.out.println(filedir2);
+                JPanel temp= new new_demo().script(filedir,filedir2,layoutMethod,"unDirect", -1,repulseStrength,gravity,speed,area,optimalDistance,stepRatio);                                                                                                                
                                 workTabbedPane.add("Default",temp);
                                  workTabbedPane.setTabComponentAt( workTabbedPane.indexOfComponent(temp),new Label_closing("Default").getJPanel());
 			}
