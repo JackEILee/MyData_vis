@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import org.openide.util.Exceptions;
 
 public class MyColor {
-	 static String filenametopo="C:\\Users\\lgw\\Desktop\\颜色测试.csv";
-	 public static ArrayList ColorRead()  {
+	
+	 public static ArrayList ColorRead(String filename) {
 		// TODO Auto-generated method stub
-		duwenjian dw = null;
+                 String filenametopo=filename;
+                 ReadFile dw = null;
              try {
-                 dw = new duwenjian(filenametopo);
+                 dw = new ReadFile(filenametopo);
              } catch (Exception ex) {
                  Exceptions.printStackTrace(ex);
              }
 		 ArrayList br = new ArrayList();
-		 /*ͳ��CSV��*/
+		
 		  while(true){
 		   String str = null;
-                    try {
-                        str = dw.readLine();
-                    } catch (Exception ex) {
-                        Exceptions.printStackTrace(ex);
-                    }
+                     try {
+                         str = dw.readLine();
+                     } catch (Exception ex) {
+                         Exceptions.printStackTrace(ex);
+                     }
 		   ArrayList ar=dw.fromCSVLinetoArray(str);
 		   if(str==null){
 		   break;}
