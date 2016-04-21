@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns:viz="http:///www.gexf.net/1.1draft/viz" version="1.1" xmlns="http://www.gexf.net/1.1draft">
+<meta lastmodifieddate="2010-03-31+18:43">
+<creator>Gephi 0.7</creator>
+</meta>
+<graph defaultedgetype="directed" idtype="string" type="static">
+<attributes class="node" mode="static">
+<attribute id="modularity_class" title="Modularity Class" type="integer"/>
+</attributes>
+<nodes count="77">
+<node id="0.0" label="Myriel">
+<attvalues>
+<attvalue for="modularity_class" value="0"/>
+</attvalues>
+<viz:size value="18.357143"/>
+<viz:color b="245" g="91" r="91"/>
+
+</node>
+<node id="1.0" label="Napoleon">
+<attvalues>
+<attvalue for="modularity_class" value="0"/>
+</attvalues>
+<viz:size value="14.5"/>
+<viz:color b="245" g="91" r="91"/>
+
+</node>
+<node id="2.0" label="MlleBaptistine">
+<attvalues>
+<attvalue for="modularity_class" value="1"/>
+</attvalues>
+<viz:size value="15.357143"/>
+<viz:color b="91" g="91" r="245"/>
+
+</node>
+<node id="3.0" label="MmeMagloire">
+<attvalues>
+<attvalue for="modularity_class" value="1"/>
+</attvalues>
+<viz:size value="15.357143"/>
+<viz:color b="91" g="91" r="245"/>
+
+</node>
+<node id="4.0" label="CountessDeLo">
+<attvalues>
+<attvalue for="modularity_class" value="0"/>
+</attvalues>
+<viz:size value="14.5"/>
+<viz:color b="245" g="91" r="91"/>
+
+</node>
+<node id="5.0" label="Geborand">
+<attvalues>
+<attvalue for="modularity_class" value="0"/>
+</attvalues>
+<viz:size value="14.5"/>
+<viz:color b="245" g="91" r="91"/>
+
+</node>
+<node id="6.0" label="Champtercier">
+<attvalues>
+<attvalue for="modularity_class" value="0"/>
+</attvalues>
+<viz:size value="14.5"/>
+<viz:color b="245" g="91" r="91"/>
+
+</node>
+<node id="7.0" label="Cravatte">
+<attvalues>
+<attvalue for="modularity_class" value="0"/>
+</attvalues>
+<viz:size value="14.5"/>
+<viz:color b="245" g="91" r="91"/>
+
+</node>
+<node id="8.0" label="Count">
+<attvalues>
+<attvalue for="modularity_class" value="0"/>
+</attvalues>
+<viz:size value="14.5"/>
+<viz:color b="245" g="91" r="91"/>
+
+</node>
+<node id="9.0" label="OldMan">
+<attvalues>
+<attvalue for="modularity_class" value="0"/>
+</attvalues>
+<viz:size value="14.5"/>
+<viz:color b="245" g="91" r="91"/>
+
+</node>
+<node id="10.0" label="Labarre">
+<attvalues>
+<attvalue for="modularity_class" value="1"/>
+</attvalues>
+<viz:size value="14.5"/>
+<viz:color b="91" g="91" r="245"/>
+
+</node>
+<node id="11.0" label="Valjean">
+<attvalues>
+<attvalue for="modularity_class" value="1"/>
+</attvalues>
+<viz:size value="10.5"/>
+<viz:color b="91" g="91" r="245"/>
+
+</node>
+<node id="12.0" label="Marguerite">
+<attvalues>
+<attvalue for="modularity_class" value="1"/>
+</attvalues>
+<viz:size value="14.928571"/>
+<viz:color b="91" g="91" r="245"/>
+
+</node>
+
+</nodes>
+<edges count="254">
+<edge id="0" source="1.0" target="0.0"/>
+<edge id="1" source="2.0" target="0.0" weight="20.0"/>
+<edge id="2" source="3.0" target="0.0" weight="10.0"/>
+<edge id="3" source="3.0" target="2.0" weight="6.0"/>
+<edge id="4" source="4.0" target="0.0"/>
+<edge id="5" source="5.0" target="0.0"/>
+<edge id="6" source="6.0" target="0.0"/>
+<edge id="7" source="7.0" target="0.0"/>
+<edge id="8" source="8.0" target="0.0" weight="2.0"/>
+<edge id="9" source="9.0" target="0.0"/>
+<edge id="13" source="11.0" target="0.0" weight="40.0"/>
+<edge id="12" source="11.0" target="2.0" weight="3.0"/>
+<edge id="11" source="11.0" target="3.0" weight="3.0"/>
+<edge id="10" source="11.0" target="10.0"/>
+<edge id="14" source="12.0" target="11.0"/>
+
+</edges>
+</graph>
+</gexf>
