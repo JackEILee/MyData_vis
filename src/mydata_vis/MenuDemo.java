@@ -501,7 +501,8 @@ public class MenuDemo extends Frame
 
         
         private JPanel temp;
-        
+ 
+//qljiang0203
 public	MenuDemo()
          {      
              gravity = 10d;
