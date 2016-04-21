@@ -113,9 +113,17 @@ public class PreviewSketch1 extends JPanel implements MouseListener, MouseWheelL
 
     @Override
     public void mouseClicked(MouseEvent e) {
+    	
+   
+    	
+    	
+        
+      
         
         if (previewController.sendMouseEvent(buildPreviewMouseEvent(e, PreviewMouseEvent.Type.CLICKED))) {
             refreshLoop.refreshSketch();
+            //此处弹出全局菜单
+            new GlobalPopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY()); //new GlobalPopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY()); 
         }
         int count =e.getClickCount();
         if(count==2)
@@ -136,9 +144,21 @@ public class PreviewSketch1 extends JPanel implements MouseListener, MouseWheelL
 
     @Override
     public void mouseReleased(MouseEvent e) {
+    	//如果击中的不是一个点，并且是右键，则弹出全局菜单,如果右击的是一个点，则弹出关于点的局部菜单
+    	if (e.isPopupTrigger())
+    	{
+    		if(!MouseListenerTemplate.innode)
+    		          new GlobalPopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY()); 
+    		else
+    			new NodePopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    	}
+                    
+    	
         if (!previewController.sendMouseEvent(buildPreviewMouseEvent(e, PreviewMouseEvent.Type.RELEASED))) {
             setMoving(false);
         }
+        //先判断是否是弹出菜单事件，如果是，则弹出来全局菜单
+        
         previewController.refreshPreview();
         refreshLoop.refreshSketch();
     }

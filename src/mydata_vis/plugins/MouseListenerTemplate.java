@@ -71,69 +71,79 @@ public class MouseListenerTemplate implements PreviewMouseListener {
     float start_x;
     float  start_y;
     public static boolean innode;
+    public static Node nodeclicked;
     PreviewController  previewController;
     private PreviewMouseEvent.Button Left;
     private PreviewMouseEvent.Button Right;
      static ArrayList co=new ArrayList();
         private static  Boolean setHighlight=false;//初始时没有任何点被点亮
         static NodeIterable qq;
+       GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getGraphModel();
        
     public void mouseClicked(PreviewMouseEvent event, PreviewProperties properties, Workspace workspace) {
          Graph graph=Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph();
-        for (Node node : Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph().getNodes()) {
+         
+       
+        
+        for (Node node : graph.getNodes()) {
            
             if (clickingInNode(node, event)) {
               
-                 System.out.println(setHighlight);
+                  System.out.println(setHighlight);
+                  
+              //如果点击左键
                if(event.button==Button.LEFT)
                {
                     if(setHighlight==false)
-                    {
-                     NodeIterable pp=graph.getNeighbors(node);
-                           qq=graph.getNeighbors(node);
-                     Iterator<Node> cc=pp.iterator();
-                     while (cc.hasNext() ) 
-                     {
-        	       Node n=cc.next();
-                
-                       System.out.println(n.getColor());
-                       co.add(n.getColor());
-        	        n.setColor(yellow);   
-                       setHighlight=true;
-                       System.out.println(n);                   
-                      }
-                       System.out.println(qq); 
-                   }   
+	                    {
+	                     NodeIterable pp=graph.getNeighbors(node);
+	                           qq=graph.getNeighbors(node);
+	                     Iterator<Node> cc=pp.iterator();
+	                     while (cc.hasNext() ) 
+	                     {
+	        	       Node n=cc.next();
+	                
+	                       System.out.println(n.getColor());
+	                       co.add(n.getColor());
+	        	        n.setColor(yellow);   
+	                       setHighlight=true;
+	                       System.out.println(n);                   
+	                      }
+	                       System.out.println(qq); 
+	                   }   
                     
-                    else if(setHighlight==true){
-                      Iterator<Node> cc2=qq.iterator();
-                        int i=0;
-                        System.out.println(i);
-                           System.out.println(qq);   
-                           System.out.println(cc2);   
-                        while (cc2.hasNext()) {
-        	        Node nn=cc2.next();
-               
-        	      nn.setColor((Color) co.get(i));   
-                       i++;
-                    
-                   }
-                      co.clear();
-              
-                        NodeIterable pp2=graph.getNeighbors(node);
-                        qq=graph.getNeighbors(node);
-                        Iterator<Node> cc3=pp2.iterator();
-                        while (cc3.hasNext() ) {
-        	        Node n=cc3.next();                                    
-                        co.add(n.getColor());
-        	        n.setColor(yellow);                                                                      
-               }                         
-               }
+	                    else if(setHighlight==true){
+	                      Iterator<Node> cc2=qq.iterator();
+	                        int i=0;
+	                        System.out.println(i);
+	                           System.out.println(qq);   
+	                           System.out.println(cc2); 
+	                           
+			                while (cc2.hasNext()) {
+			        	         Node nn=cc2.next();
+			        	         nn.setColor((Color) co.get(i));   
+			                       i++;
+			                    
+			                     }
+	                      co.clear();
+	              
+	                        NodeIterable pp2=graph.getNeighbors(node);
+	                        qq=graph.getNeighbors(node);
+	                        Iterator<Node> cc3=pp2.iterator();
+			                 while (cc3.hasNext() ) {
+				        	        Node n=cc3.next();                                    
+				                        co.add(n.getColor());
+				        	        n.setColor(yellow);                                                                      
+			                   }                         
+	                   }
+                    //如果点击左键，此处将Consumed置为false;
+                    event.setConsumed(false);
                } 
-               
+               /*
+              //如果点击右键 
              if(event.button==Button.RIGHT)
                  {
-                     GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getGraphModel();
+                     
                      PreviewModel model = Lookup.getDefault().lookup(PreviewController.class).getModel();
                      PreviewController previewController = Lookup.getDefault().lookup(PreviewController.class);
                  
@@ -151,14 +161,19 @@ public class MouseListenerTemplate implements PreviewMouseListener {
                              gec.deleteNode(node2);             
                              return;
                          }
-                     }                    
+                     } 
+                     
+                     //如果点击右键，此处将Consumed置为true;
+                     event.setConsumed(true);
                  }
+                 */
 
                
             }
         }
       //  properties.removeSimpleValue("display-label.node.id");
-        event.setConsumed(true);//So the renderer is executed and the graph repainted
+       //此处ping
+       // event.setConsumed(true);//So the renderer is executed and the graph repainted
     }
 
     @Override
@@ -230,7 +245,10 @@ public class MouseListenerTemplate implements PreviewMouseListener {
         float xdiff = node.x() - event.x;
         float ydiff = -node.y() - event.y;//Note that y axis is inverse for node coordinates
         float radius = node.size();
+        boolean flag=xdiff * xdiff + ydiff * ydiff < radius * radius;
+            if(flag)
+                nodeclicked=node;
           
-        return xdiff * xdiff + ydiff * ydiff < radius * radius;
+        return flag;
     }
 }
