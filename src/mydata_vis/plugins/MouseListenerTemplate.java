@@ -85,6 +85,7 @@ public class MouseListenerTemplate implements PreviewMouseListener {
        GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getGraphModel();
        
     public void mouseClicked(PreviewMouseEvent event, PreviewProperties properties, Workspace workspace) {
+    
          Graph graph=Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph();
          
        
@@ -143,61 +144,39 @@ public class MouseListenerTemplate implements PreviewMouseListener {
                     //如果点击左键，此处将Consumed置为false;
                     event.setConsumed(false);
                } 
-               /*
-              //如果点击右键 
-             if(event.button==Button.RIGHT)
-                 {
-                     
-                     PreviewModel model = Lookup.getDefault().lookup(PreviewController.class).getModel();
-                     PreviewController previewController = Lookup.getDefault().lookup(PreviewController.class);
-                 
-                    PreviewModel previewModelpreview=previewController.getModel();
-                    DirectedGraph graph2=graphModel.getDirectedGraph();
-                    GraphElementsController gec=Lookup.getDefault().lookup(GraphElementsController.class);    
-                    Node[] constArray=graphModel.getGraph().getNodes().toArray();           ///存储图中节点ID号的数组，直接寻址数组
-                  
-                     for (Node node2 : Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph().getNodes()) 
-                     {
-                         if (clickingInNode(node2, event)) 
-                         {                     
-                             JOptionPane.showConfirmDialog(null, "Node will be deleted,Continue? ","Delete Node ID "+node.getId(), JOptionPane.YES_NO_OPTION); 
-                             graph2.readUnlockAll();                                            //这行代码很关键，在写图数据之前必须解除对图数据的读同步锁             
-                             gec.deleteNode(node2);             
-                             return;
-                         }
-                     } 
-                     
-                     //如果点击右键，此处将Consumed置为true;
-                     event.setConsumed(true);
-                 }
-                 */
+              
+              
 
                
             }
         }
-      //  properties.removeSimpleValue("display-label.node.id");
-       //此处ping
-       // event.setConsumed(true);//So the renderer is executed and the graph repainted
+      
+        
     }
 
     @Override
     public void mousePressed(PreviewMouseEvent event, PreviewProperties properties, Workspace workspace) {
             innode=false;
+      //找出点击的点
          for (Node node : Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph().getNodes())
          {
              if(clickingInNode(node,event))
              {
-                start_x= node.x();
+                start_x= node.x();//记录下被点击点的位置
                 start_y= node.y(); 
                 innode=true;
+                nodeclicked=node;
                 break;
              }
          }
+      //找出点击的线
          for (Edge edge : Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph().getEdges())
          {
               if (clickingInEdge(edge,event))
               {
             	  inedge=true;
+            	  edgeclicked=edge;
+            	  break;
             	  
               }
          }
@@ -236,23 +215,28 @@ public class MouseListenerTemplate implements PreviewMouseListener {
 
     @Override
     public void mouseReleased(PreviewMouseEvent event, PreviewProperties properties, Workspace workspace) {
-         System.out.println("释放开始");
-        for (Node node : Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph().getNodes())
-        {
-            if(dragNode(node))
+            System.out.println("释放开始");
+      
+        	//计算释放的时候鼠标事件的坐标与点的坐标的距离，如果过小，则不会重置点的坐标
+        	float  dis=(nodeclicked.x() - event.x)*(nodeclicked.x() - event.x)+(-nodeclicked.y() - event.y)*(-nodeclicked.y() - event.y);
+           
+        	if(innode && dis>nodeclicked.size()*nodeclicked.size()  ) 
             {
-                
-                node.setPosition(event.x, -event.y);
+               
+        		nodeclicked.setPosition(event.x, -event.y);
+        		innode=false;
                 
                 System.out.println("释放进入");
             }
-        }
+        
         
     }
+    /*
     private boolean dragNode(Node node)
     {
         return   node.x()==start_x &&  node.y()==start_y;
     }
+    */
      //判断是否击中线
     private boolean clickingInEdge (Edge edge, PreviewMouseEvent event) 
     {
@@ -261,6 +245,8 @@ public class MouseListenerTemplate implements PreviewMouseListener {
                   float x2=edge.getTarget().x();
                   float y2=edge.getTarget().y();
                   float d;
+                  
+          //计算点击的位置与线的距离
               if(x1==x2)
               {
             	  d=Math.abs(event.x-x1);
@@ -276,22 +262,15 @@ public class MouseListenerTemplate implements PreviewMouseListener {
             	  d=(float) (Math.abs(k*event.x+event.y+b)/Math.sqrt(k*k+1));
               }
               
-              if(d<4)
-              {
-            	  edgeclicked=edge;
-            	  return true;
-              }
-               return false;   
+             
+               return d<10;   //如果该点离线的距离小于4，则表示击中了该线
     	
     }
     private boolean clickingInNode(Node node, PreviewMouseEvent event) {
         float xdiff = node.x() - event.x;
         float ydiff = -node.y() - event.y;//Note that y axis is inverse for node coordinates
         float radius = node.size();
-        boolean flag=xdiff * xdiff + ydiff * ydiff < radius * radius;
-            if(flag)
-                nodeclicked=node;
-          
-        return flag;
+        
+        return xdiff * xdiff + ydiff * ydiff < radius * radius;
     }
 }
