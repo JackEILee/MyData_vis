@@ -135,8 +135,8 @@ public class PreviewSketch1 extends JPanel implements MouseListener, MouseWheelL
     @Override
     public void mousePressed(MouseEvent e) {
         previewController.sendMouseEvent(buildPreviewMouseEvent(e, PreviewMouseEvent.Type.PRESSED));
-//        ref.set(e.getX(), e.getY());
-//        lastMove.set(target.getTranslate());
+        ref.set(e.getX(), e.getY());
+        lastMove.set(target.getTranslate());
 
        // refreshLoop.refreshSketch();
     }
@@ -156,22 +156,21 @@ public class PreviewSketch1 extends JPanel implements MouseListener, MouseWheelL
     		else if(MouseListenerTemplate.inedge)
     		{
     			new EdgePopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY());
-    			System.out.println("线被击中了啊啊");
     			MouseListenerTemplate.inedge=false;
     		}
     		//如果点中空白地方
     		else
     			new GlobalPopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY());
     	}
-                    
+                   
     	
         if (!previewController.sendMouseEvent(buildPreviewMouseEvent(e, PreviewMouseEvent.Type.RELEASED))) {
-            //setMoving(false);
+            setMoving(false);
         }
-        //先判断是否是弹出菜单事件，如果是，则弹出来全局菜单
+       
+          previewController.refreshPreview();
+           refreshLoop.refreshSketch(); 
         
-        previewController.refreshPreview();
-        refreshLoop.refreshSketch();
     }
 
     @Override

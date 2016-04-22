@@ -156,7 +156,7 @@ public class MouseListenerTemplate implements PreviewMouseListener {
 
     @Override
     public void mousePressed(PreviewMouseEvent event, PreviewProperties properties, Workspace workspace) {
-            innode=false;
+            innode=false;inedge=false;
       //找出点击的点
          for (Node node : Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph().getNodes())
          {
@@ -231,12 +231,8 @@ public class MouseListenerTemplate implements PreviewMouseListener {
         
         
     }
-    /*
-    private boolean dragNode(Node node)
-    {
-        return   node.x()==start_x &&  node.y()==start_y;
-    }
-    */
+    
+    
      //判断是否击中线
     private boolean clickingInEdge (Edge edge, PreviewMouseEvent event) 
     {
@@ -263,7 +259,7 @@ public class MouseListenerTemplate implements PreviewMouseListener {
               }
               
              
-               return d<10;   //如果该点离线的距离小于4，则表示击中了该线
+               return d<20;   //如果该点离线的距离小于20，则表示击中了该线
     	
     }
     private boolean clickingInNode(Node node, PreviewMouseEvent event) {
