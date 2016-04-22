@@ -83,6 +83,7 @@ public class MouseListenerTemplate implements PreviewMouseListener {
         private static  Boolean setHighlight=false;//初始时没有任何点被点亮
         static NodeIterable qq;
        GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getGraphModel();
+	private float dist;
        
     public void mouseClicked(PreviewMouseEvent event, PreviewProperties properties, Workspace workspace) {
     
@@ -218,13 +219,15 @@ public class MouseListenerTemplate implements PreviewMouseListener {
             System.out.println("释放开始");
       
         	//计算释放的时候鼠标事件的坐标与点的坐标的距离，如果过小，则不会重置点的坐标
-        	float  dis=(nodeclicked.x() - event.x)*(nodeclicked.x() - event.x)+(-nodeclicked.y() - event.y)*(-nodeclicked.y() - event.y);
+                if(nodeclicked!=null)
+        	  dist = (nodeclicked.x() - event.x)*(nodeclicked.x() - event.x)+(-nodeclicked.y() - event.y)*(-nodeclicked.y() - event.y);
            
-        	if(innode && dis>nodeclicked.size()*nodeclicked.size()  ) 
+        	if(innode && dist>nodeclicked.size()*nodeclicked.size()  ) 
             {
                
         		nodeclicked.setPosition(event.x, -event.y);
         		innode=false;
+        		nodeclicked=null;
                 
                 System.out.println("释放进入");
             }

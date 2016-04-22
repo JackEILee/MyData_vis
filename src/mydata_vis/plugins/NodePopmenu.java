@@ -70,7 +70,8 @@ public class NodePopmenu {
                     JOptionPane.showConfirmDialog(null, "Node will be deleted,Continue? ","Delete Node ID "+MouseListenerTemplate.nodeclicked.getId(), JOptionPane.YES_OPTION); 
                             
                              graph2.readUnlockAll();                                            //这行代码很关键，在写图数据之前必须解除对图数据的读同步锁             
-                             gec.deleteNode(MouseListenerTemplate.nodeclicked);             
+                             gec.deleteNode(MouseListenerTemplate.nodeclicked);      
+                             MouseListenerTemplate.nodeclicked=null;
                              return;
                         
                      } 	            	

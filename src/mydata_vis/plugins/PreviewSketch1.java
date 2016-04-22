@@ -157,6 +157,7 @@ public class PreviewSketch1 extends JPanel implements MouseListener, MouseWheelL
     		{
     			new EdgePopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY());
     			MouseListenerTemplate.inedge=false;
+    			
     		}
     		//如果点中空白地方
     		else
