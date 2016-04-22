@@ -144,13 +144,25 @@ public class PreviewSketch1 extends JPanel implements MouseListener, MouseWheelL
 
     @Override
     public void mouseReleased(MouseEvent e) {
-    	//如果击中的不是一个点，并且是右键，则弹出全局菜单,如果右击的是一个点，则弹出关于点的局部菜单
+    	//如果击中的不是一个点，并且是右键，则弹出全局菜单,如果右击的是一个点，则弹出关于点的局部菜单,如果右击的是一条线，则弹出来关于线的局部菜单
     	if (e.isPopupTrigger())
     	{
-    		if(!MouseListenerTemplate.innode)
-    		          new GlobalPopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY()); 
+    		//如果点中点
+    		if(MouseListenerTemplate.innode)
+    		{
+    			new NodePopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY()); 
+    			MouseListenerTemplate.innode=false;
+    		}
+    		//如果点中线
+    		else if(MouseListenerTemplate.inedge)
+    		{
+    			new EdgePopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    			System.out.println("线被击中了啊啊");
+    			MouseListenerTemplate.inedge=false;
+    		}
+    		//如果点中空白地方
     		else
-    			new NodePopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    			new GlobalPopmenu().popupMenu.show(e.getComponent(), e.getX(), e.getY());
     	}
                     
     	

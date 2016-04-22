@@ -50,6 +50,7 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import org.gephi.datalab.api.GraphElementsController;
 import org.gephi.graph.api.DirectedGraph;
+import org.gephi.graph.api.Edge;
 import org.gephi.graph.api.GraphController;
 import org.gephi.graph.api.GraphModel;
 import org.gephi.graph.api.Node;
@@ -70,8 +71,11 @@ public class MouseListenerTemplate implements PreviewMouseListener {
   //  @Override
     float start_x;
     float  start_y;
-    public static boolean innode;
-    public static Node nodeclicked;
+    public static boolean innode;//用来指代是否击中点
+    public static boolean inedge;//用来指代是否击中线
+    public static Node nodeclicked;//定义该静态变量，用来指代被点中的点
+    public static Edge edgeclicked;//定义该静态变量，用来指代被点中的线
+    
     PreviewController  previewController;
     private PreviewMouseEvent.Button Left;
     private PreviewMouseEvent.Button Right;
@@ -189,6 +193,14 @@ public class MouseListenerTemplate implements PreviewMouseListener {
                 break;
              }
          }
+         for (Edge edge : Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph().getEdges())
+         {
+              if (clickingInEdge(edge,event))
+              {
+            	  inedge=true;
+            	  
+              }
+         }
               
                
                 System.out.println("开始位置的鼠标x坐标:"+start_x);
@@ -240,6 +252,37 @@ public class MouseListenerTemplate implements PreviewMouseListener {
     private boolean dragNode(Node node)
     {
         return   node.x()==start_x &&  node.y()==start_y;
+    }
+     //判断是否击中线
+    private boolean clickingInEdge (Edge edge, PreviewMouseEvent event) 
+    {
+                  float x1=edge.getSource().x();
+                  float y1=edge.getSource().y();
+                  float x2=edge.getTarget().x();
+                  float y2=edge.getTarget().y();
+                  float d;
+              if(x1==x2)
+              {
+            	  d=Math.abs(event.x-x1);
+              }
+              else if(y1==y2)
+              {
+            	  d=Math.abs(-y1-event.y);
+              }
+              else
+              {
+            	  float k=(y2-y1)/(x2-x1);
+            	  float b=y1-(y2-y1)*x1/(x2-x1);
+            	  d=(float) (Math.abs(k*event.x+event.y+b)/Math.sqrt(k*k+1));
+              }
+              
+              if(d<4)
+              {
+            	  edgeclicked=edge;
+            	  return true;
+              }
+               return false;   
+    	
     }
     private boolean clickingInNode(Node node, PreviewMouseEvent event) {
         float xdiff = node.x() - event.x;

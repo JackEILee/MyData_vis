@@ -67,9 +67,9 @@ public class NodePopmenu {
 	            	//删除点的操作                 
                     DirectedGraph graph2=Lookup.getDefault().lookup(GraphController.class).getGraphModel().getDirectedGraph();
                     GraphElementsController gec=Lookup.getDefault().lookup(GraphElementsController.class);    
-                    JOptionPane.showConfirmDialog(null, "Node will be deleted,Continue? ","Delete Node ID "+MouseListenerTemplate.nodeclicked.getId(), JOptionPane.YES_NO_OPTION); 
+                    JOptionPane.showConfirmDialog(null, "Node will be deleted,Continue? ","Delete Node ID "+MouseListenerTemplate.nodeclicked.getId(), JOptionPane.YES_OPTION); 
                             
-                         graph2.readUnlockAll();                                            //这行代码很关键，在写图数据之前必须解除对图数据的读同步锁             
+                             graph2.readUnlockAll();                                            //这行代码很关键，在写图数据之前必须解除对图数据的读同步锁             
                              gec.deleteNode(MouseListenerTemplate.nodeclicked);             
                              return;
                         
