@@ -27,7 +27,7 @@ public class GlobalPopmenu {
 	{
       
 		popupMenu = new JPopupMenu(); // 实例化弹出菜单 
-        String[] str = { "红色", "绿色", "蓝色", "黄色", "粉色" }; // 菜单项名称 
+        String[] str = { "red", "green", "blue", "yellow", "pink" }; // 菜单项名称 
         items = new JMenuItem[5]; // 创建5个菜单项 
         
         MenuItemMonitor menuItemMonitor = new MenuItemMonitor(); //初始化一个菜单项的监听器
