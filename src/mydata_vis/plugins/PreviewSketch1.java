@@ -114,11 +114,6 @@ public class PreviewSketch1 extends JPanel implements MouseListener, MouseWheelL
     @Override
     public void mouseClicked(MouseEvent e) {
     	
-   
-    	
-    	
-        
-      
         
         if (previewController.sendMouseEvent(buildPreviewMouseEvent(e, PreviewMouseEvent.Type.CLICKED))) {
             refreshLoop.refreshSketch();
@@ -208,20 +203,24 @@ public class PreviewSketch1 extends JPanel implements MouseListener, MouseWheelL
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if(!MouseListenerTemplate.innode){
-        if (!previewController.sendMouseEvent(buildPreviewMouseEvent(e, PreviewMouseEvent.Type.DRAGGED))) {
-            setMoving(true);
-            Vector trans = target.getTranslate();
-            trans.set(e.getX(), e.getY());
-            trans.sub(ref);
-            trans.mult(isRetina ? 2f : 1f);
-            trans.div(target.getScaling()); // ensure const. moving speed whatever the zoom is
-            trans.add(lastMove);
-
-            refreshLoop.refreshSketch();
-        }
-        }
-       // refreshLoop.refreshSketch();
+	    
+    	if(!MouseListenerTemplate.innode && !MouseListenerTemplate.inedge &&!MouseListenerTemplate.region ){
+	        if (!previewController.sendMouseEvent(buildPreviewMouseEvent(e, PreviewMouseEvent.Type.DRAGGED))) {
+	           setMoving(true);
+	            Vector trans = target.getTranslate();
+	           trans.set(e.getX(), e.getY());
+	           trans.sub(ref);
+	           trans.mult(isRetina ? 2f : 1f);
+	           trans.div(target.getScaling()); // ensure const. moving speed whatever the zoom is
+	            trans.add(lastMove);
+	      
+	//
+	//            refreshLoop.refreshSketch();
+	//        }
+	//        }
+	       // refreshLoop.refreshSketch();
+	        }
+	      }
     }
 
     @Override

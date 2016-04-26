@@ -27,7 +27,7 @@ public class GlobalPopmenu {
 	{
       
 		popupMenu = new JPopupMenu(); // 实例化弹出菜单 
-        String[] str = { "red", "green", "blue", "yellow", "pink" }; // 菜单项名称 
+        String[] str = { "region choose", "green", "blue", "yellow", "pink" }; // 菜单项名称 
         items = new JMenuItem[5]; // 创建5个菜单项 
         
         MenuItemMonitor menuItemMonitor = new MenuItemMonitor(); //初始化一个菜单项的监听器
@@ -47,12 +47,15 @@ public class GlobalPopmenu {
 	        @Override 
 	        public void actionPerformed(ActionEvent event) { 
 	            // 获取String格式的ActionCommand 
-	            String strIndex = ((JMenuItem) event.getSource()) 
-	                    .getActionCommand(); 
+	            String strIndex = ((JMenuItem) event.getSource()).getActionCommand(); 
 	            // 将上面取到的String格式的内容变为int类型作为取颜色的下标 
 	            int niIndex = Integer.parseInt(strIndex); 
 	            // 设置背景色为对应下标的颜色 
-	             items[niIndex].getParent().setBackground(colors[niIndex]);
+	             if(niIndex==0)
+	             {
+
+	            	 MouseListenerTemplate.region=true;
+	             }
 	           
 	           
 	        } 

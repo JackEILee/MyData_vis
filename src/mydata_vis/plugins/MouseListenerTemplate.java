@@ -71,6 +71,13 @@ public class MouseListenerTemplate implements PreviewMouseListener {
   //  @Override
     float start_x;
     float  start_y;
+    //记录框选的范围
+    float region_x1;
+    float region_y1;
+    float region_x2;
+    float region_y2;
+    
+    public static boolean region=false;//用来表示是否框选
     public static boolean innode;//用来指代是否击中点
     public static boolean inedge;//用来指代是否击中线
     public static Node nodeclicked;//定义该静态变量，用来指代被点中的点
@@ -90,7 +97,7 @@ public class MouseListenerTemplate implements PreviewMouseListener {
          Graph graph=Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph();
          
        
-        
+     //左键高亮   
         for (Node node : graph.getNodes()) {
            
             if (clickingInNode(node, event)) {
@@ -151,6 +158,14 @@ public class MouseListenerTemplate implements PreviewMouseListener {
                
             }
         }
+        
+    //如果框选，记录框的起始点
+        if(region)
+        {
+        	region_x1=event.x;
+        	region_y1=event.y;
+        	
+        }
       
         
     }
@@ -181,12 +196,13 @@ public class MouseListenerTemplate implements PreviewMouseListener {
             	  
               }
          }
-              
-               
-                System.out.println("开始位置的鼠标x坐标:"+start_x);
-                System.out.println("开始位置的鼠标x坐标:"+start_y);
-               
-                
+         
+         //如果框选，记录框的起始点
+        
+         	region_x1=event.x;
+         	region_y1=-event.y;
+         	System.out.println("框选的起始点:"+"("+region_x1+"，"+region_y1+")");
+         	
                 System.out.println("pressed");
                 event.setConsumed(true);
                 
@@ -219,7 +235,7 @@ public class MouseListenerTemplate implements PreviewMouseListener {
             System.out.println("释放开始");
       
         	//计算释放的时候鼠标事件的坐标与点的坐标的距离，如果过小，则不会重置点的坐标
-                if(nodeclicked!=null)
+        if(nodeclicked!=null)
         	  dist = (nodeclicked.x() - event.x)*(nodeclicked.x() - event.x)+(-nodeclicked.y() - event.y)*(-nodeclicked.y() - event.y);
            
         	if(innode && dist>nodeclicked.size()*nodeclicked.size()  ) 
@@ -231,10 +247,40 @@ public class MouseListenerTemplate implements PreviewMouseListener {
                 
                 System.out.println("释放进入");
             }
+        	
+        	//执行框选操作
+        	if(region)
+        	{
+        		for (Node node : Lookup.getDefault().lookup(GraphController.class).getGraphModel(workspace).getGraph().getNodes())
+        		{
+        			if(includeInRegion(node,event))
+        			{
+        				node.setColor(Color.red);
+        				System.out.println("迭代到的点的坐标:"+"("+node.x()+","+node.y()+")");
+        			}
+        		}
+        		//框选操作完成后，将region变量恢复
+        		region=false;
+              
+        		
+        	}
         
         
     }
-    
+    private boolean includeInRegion(Node node,PreviewMouseEvent event)
+    {
+    	//记录框选的终点的坐标
+    	region_x2=event.x;
+        region_y2=-event.y;
+        //将所框选的区域颜色改变
+      //  event.getClass()event.toString()
+        
+        
+        
+        System.out.println("框选的终点:"+"("+region_x2+","+region_y2+")");
+    	return   node.x()<=region_x2 && node.x()>=region_x1 && node.y()<=region_y1 && node.y()>=region_y2;
+    	
+    }
     
      //判断是否击中线
     private boolean clickingInEdge (Edge edge, PreviewMouseEvent event) 
