@@ -16,6 +16,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import org.gephi.datalab.api.GraphElementsController;
+import org.gephi.graph.api.DirectedGraph;
+import org.gephi.graph.api.GraphController;
+import org.openide.util.Lookup;
+
 public class GlobalPopmenu {
 	//声明弹出菜单以及其子菜单项
 	public JPopupMenu popupMenu;
@@ -27,7 +32,7 @@ public class GlobalPopmenu {
 	{
       
 		popupMenu = new JPopupMenu(); // 实例化弹出菜单 
-        String[] str = { "region choose", "green", "blue", "yellow", "pink" }; // 菜单项名称 
+        String[] str = { "region choose", "recovery ego", "blue", "yellow", "pink" }; // 菜单项名称 
         items = new JMenuItem[5]; // 创建5个菜单项 
         
         MenuItemMonitor menuItemMonitor = new MenuItemMonitor(); //初始化一个菜单项的监听器
@@ -55,6 +60,22 @@ public class GlobalPopmenu {
 	             {
 
 	            	 MouseListenerTemplate.region=true;
+	             }
+	             //执行ego点的恢复
+	             else if(niIndex==1 && NodePopmenu.egoNodes.size()!=0)
+	             {
+	            	 System.out.println("egoNodes中的点的标签："+NodePopmenu.egoNodes.getFirst().getId());
+	            	 DirectedGraph graph2=Lookup.getDefault().lookup(GraphController.class).getGraphModel().getDirectedGraph();
+	            	 GraphElementsController gec=Lookup.getDefault().lookup(GraphElementsController.class);
+//                     gec.createNode("新加入的", NodePopmenu.egoNodes.pollFirst().getId().toString(), graph2);
+	            	 //恢复ego点
+	            	 while(NodePopmenu.egoNodes.size()!=0)
+	            	 {
+	            	    graph2.addNode(NodePopmenu.egoNodes.pollFirst());
+	            	 }
+	            	 
+	            	 PreviewSketch1.target.refresh();
+                     PreviewSketch1.refreshLoop.refreshSketch();
 	             }
 	           
 	           

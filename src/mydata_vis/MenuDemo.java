@@ -395,8 +395,8 @@ if(!graphIsDirect.equals("Direct")&&(!graphIsDirect.equals("unDirect")))   //进
                     
         G2DTarget target = (G2DTarget) previewController.getRenderTarget(RenderTarget.G2D_TARGET);
         PreviewSketch1 previewSketch = new PreviewSketch1(target);
-        previewController.refreshPreview();       
-        previewSketch.resetZoom();
+//        previewController.refreshPreview();       
+//        previewSketch.resetZoom();
         
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());

@@ -68,6 +68,10 @@ public class EdgePopmenu {
                             
                              graph2.readUnlockAll();                                            //这行代码很关键，在写图数据之前必须解除对图数据的读同步锁             
                              gec.deleteEdge(MouseListenerTemplate.edgeclicked); 
+                             //对图像进行刷新操作
+                             PreviewSketch1.target.refresh();
+                             PreviewSketch1.refreshLoop.refreshSketch();
+                             
                              MouseListenerTemplate.edgeclicked=null;
                              return;
                         

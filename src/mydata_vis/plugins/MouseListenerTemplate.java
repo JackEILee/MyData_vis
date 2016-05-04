@@ -84,13 +84,14 @@ public class MouseListenerTemplate implements PreviewMouseListener {
     public static Edge edgeclicked;//定义该静态变量，用来指代被点中的线
     
     PreviewController  previewController;
-    private PreviewMouseEvent.Button Left;
-    private PreviewMouseEvent.Button Right;
+    private PreviewMouseEvent.Button Left;            //左按键事件触发值
+    private PreviewMouseEvent.Button Right;          // 右按键触发事件
      static ArrayList co=new ArrayList();
-        private static  Boolean setHighlight=false;//初始时没有任何点被点亮
-        static NodeIterable qq;
+    private static  Boolean setHighlight=false;//初始时没有任何点被点亮
+     static NodeIterable qq;
        GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getGraphModel();
-	private float dist;
+       
+	private float dist;//点及点的距离
        
     public void mouseClicked(PreviewMouseEvent event, PreviewProperties properties, Workspace workspace) {
     
@@ -102,43 +103,46 @@ public class MouseListenerTemplate implements PreviewMouseListener {
            
             if (clickingInNode(node, event)) {
               
-                  System.out.println(setHighlight);
+//                  System.out.println(setHighlight);
                   
               //如果点击左键
                if(event.button==Button.LEFT)
                {
+            	   //如果设置高亮为假，将其高亮
                     if(setHighlight==false)
-	                    {
-	                     NodeIterable pp=graph.getNeighbors(node);
-	                           qq=graph.getNeighbors(node);
-	                     Iterator<Node> cc=pp.iterator();
-	                     while (cc.hasNext() ) 
-	                     {
-	        	       Node n=cc.next();
-	                
-	                       System.out.println(n.getColor());
-	                       co.add(n.getColor());
-	        	        n.setColor(yellow);   
-	                       setHighlight=true;
-	                       System.out.println(n);                   
-	                      }
-	                       System.out.println(qq); 
-	                   }   
-                    
-	                    else if(setHighlight==true){
+		                    {
+		                     NodeIterable pp=graph.getNeighbors(node);
+		                           qq=graph.getNeighbors(node);
+		                     Iterator<Node> cc=pp.iterator();
+		                     //对点进行迭代，并将对应点高亮
+		                     while (cc.hasNext() ) 
+		                     {
+		        	           Node n=cc.next();
+		                
+		                       System.out.println(n.getColor());
+		                       co.add(n.getColor());   //将得到的颜色信息存储到集合中
+		        	           n.setColor(yellow);       //将需要高亮的点设置为黄色 
+		                       setHighlight=true;
+//		                       System.out.println(n);                   
+		                      }
+//		                       System.out.println(qq); 
+		                   }   
+                    //如果高亮为真，恢复原来的数据
+	               else if(setHighlight==true){
 	                      Iterator<Node> cc2=qq.iterator();
 	                        int i=0;
-	                        System.out.println(i);
-	                           System.out.println(qq);   
-	                           System.out.println(cc2); 
+//	                        System.out.println(i);
+//	                           System.out.println(qq);   
+//	                           System.out.println(cc2);
 	                           
+	                       //将点恢复到原来的颜色    
 			                while (cc2.hasNext()) {
 			        	         Node nn=cc2.next();
 			        	         nn.setColor((Color) co.get(i));   
 			                       i++;
 			                    
 			                     }
-	                      co.clear();
+	                        co.clear();//清空集合中的数据
 	              
 	                        NodeIterable pp2=graph.getNeighbors(node);
 	                        qq=graph.getNeighbors(node);
@@ -168,6 +172,11 @@ public class MouseListenerTemplate implements PreviewMouseListener {
         }
       
         
+    }
+    public void  recoveryEgo()
+    {
+    	
+    	
     }
 
     @Override
@@ -228,6 +237,8 @@ public class MouseListenerTemplate implements PreviewMouseListener {
           event.setConsumed(true);
      
         */
+    	System.out.println("MouseTemplate的拖拽进入");
+    	event.setConsumed(true);
     }
 
     @Override
@@ -237,13 +248,13 @@ public class MouseListenerTemplate implements PreviewMouseListener {
         	//计算释放的时候鼠标事件的坐标与点的坐标的距离，如果过小，则不会重置点的坐标
         if(nodeclicked!=null)
         	  dist = (nodeclicked.x() - event.x)*(nodeclicked.x() - event.x)+(-nodeclicked.y() - event.y)*(-nodeclicked.y() - event.y);
-           
+           //判断移动点的距离是否在点的半径以内
         	if(innode && dist>nodeclicked.size()*nodeclicked.size()  ) 
             {
                
         		nodeclicked.setPosition(event.x, -event.y);
         		innode=false;
-        		nodeclicked=null;
+   		        nodeclicked=null;
                 
                 System.out.println("释放进入");
             }
